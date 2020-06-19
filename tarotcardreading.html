@@ -1,0 +1,163 @@
+<html>
+<script src="deck of cards.js" type="text/javascrpt"></script>
+<script>
+    // Tarot Deck Sim
+    //v 0.1
+    // tornotlukin
+
+// creating a basic deck of tarot cards, including static and reversed
+    //const baseDeck = [["0h",""],["1h",""],["2h",""],["3h",""],["4h",""],["5h",""],["6h",""],["7h",""],["8h",""],["9h",""],["10h",""],["11h",""],["12h",""],["13h",""],["14h",""],["15h",""],["16h",""],["17h",""],["18h",""],["19h",""],["20h",""],["21h",""],["1p",""],["2p",""],["3p",""],["4p",""],["5p",""],["6p",""],["7p",""],["8p",""],["9p",""],["10p",""],["11p",""],["12p",""],["13p",""],["14p",""],["1w",""],["2w",""],["3w",""],["4w",""],["5w",""],["6w",""],["7w",""],["8w",""],["9w",""],["10w",""],["11w",""],["12w",""],["13w",""],["14w",""],["1s",""],["2s",""],["3s",""],["4s",""],["5s",""],["6s",""],["7s",""],["8s",""],["9s",""],["10s",""],["11s",""],["12s",""],["13s",""],["14s",""],["1c",""],["2c",""],["3c",""],["4c",""],["5c",""],["6c",""],["7c",""],["8c",""],["9c",""],["10c",""],["11c",""],["12c",""],["13c",""],["14c",""]];
+    const baseDeck = ["0h","1h","2h","3h","4h","5h","6h","7h","8h","9h","10h","11h","12h","13h","14h","15h","16h","17h","18h","19h","20h","21h","1p","2p","3p","4p","5p","6p","7p","8p","9p","10p","11p","12p","13p","14p","1w","2w","3w","4w","5w","6w","7w","8w","9w","10w","11w","12w","13w","14w","1s","2s","3s","4s","5s","6s","7s","8s","9s","10s","11s","12s","13s","14s","1c","2c","3c","4c","5c","6c","7c","8c","9c","10c","11c","12c","13c","14c"];
+    const tableuMarkers = ["presPos", "ImmInf","destiny","disPast","recPast","futureInf","questioner","environ","emotions","result"];
+
+// this lays out tableu, use after deck is converted to html
+function oracle(deck,marker){
+    let dole = deck.splice(0,10);
+    for (i = 0; i < marker.length; i++){
+        var tablePlace = document.getElementById(marker[i]);
+        tablePlace.innerHTML = dole[i];
+    };
+};
+
+// Fisher–Yates shuffle, always use
+    function shuffle(array) {
+  let m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+    
+  };
+
+  return array;
+};
+
+// Creating card orientation array is the array, rot is the percentage (in decimal) of a reversed card
+    function orient(array, rot) {
+       for (i = 0; i < array.length; i++) {
+           // 10% 
+            if (Math.random() < rot){
+                array[i] = [array[i],"reversed"]
+            } else {
+                array[i] = [array[i],"static"]
+            };
+       };
+    };
+
+// using the suffle function to create a new deck
+const dealingDeck = shuffle(baseDeck);
+orient(dealingDeck, 0.1);
+
+    console.log(`The deck has ${dealingDeck.length} cards before being dealt to tableu`);
+
+ // This function will take each item in the array and make html code with it. Then it will make an array from that info
+    function arrayToHtmlCode(array) {
+        for (i = 0; i < array.length; i++) {
+           array[i] = ['<img src ="images/' + array[i][0] + '.png" class="' + array[i][1] + '">'];
+       }; 
+};
+
+arrayToHtmlCode(dealingDeck);
+
+
+
+</script>
+    <style>
+        img.reversed {
+            width: 50px;
+            padding: 2px;
+            transform: rotate(180deg);
+        }
+        img.static {
+            width: 50px;
+            padding: 2px;
+            transform: rotate(0deg);
+        }
+        .overlap {
+            transform: rotate(90deg);
+            position: relative;
+            left: -60px;
+        }
+
+        td {
+            width: 50px;
+        }
+    </style>
+<title>
+    A deck of cards JS test
+</title>
+<body style="background-color: green;">
+    <div style="color: white;">Celtic Cross</div>
+    <div class=""><table>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><span id="destiny">3</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span id="result">10</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span id="emotions">9</span></td>
+          </tr>
+          <tr>
+            <td><span id="futureInf">6</span></td>
+            <td></td>
+            <td><span id="presPos">1</span></td>
+            <td><div id="ImmInf" class="overlap">2</div></td>
+            <td><span id="disPast">4</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span id="environ">8</span></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><span id="recPast">5</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span id="questioner">7</span></td>
+          </tr>
+        </tbody>
+        </table></div>
+
+<ul>
+   <li>
+        <div style="color: white;">Down The Rabbit Hole:</div>
+        <div style=""><ul><li id="deckedOut"></li></ul></div>
+    </li>
+</ul>
+<script>
+        oracle(dealingDeck,tableuMarkers);
+        //show all the artwork
+        var showDealingDeck = document.getElementById('deckedOut');
+        // the vars should have HTML info in them, join the arrays and output to page
+        showDealingDeck.innerHTML = dealingDeck.join('');
+</script>
+
+</body>
+</html>
